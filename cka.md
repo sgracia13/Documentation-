@@ -84,3 +84,5 @@ components run including etcd and api server.
 	on the API changes that accompany the new Kubernetes version
 
 
+- Call kubeadm upgrade on the control plane node
+- 
