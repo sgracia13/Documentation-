@@ -45,9 +45,32 @@ cluster-wide, use a ClusterRole.
 - Initialize Control Plane Node. The Control Plane Node is where all of the control plane 
 components run including etcd and api server. 
 
-- 
+- Install kubeadm on your hosts
+	 1. Verify MAC address and product_uuid are unique for every node
+	 	-- `ip link` or `ifconfig -a` to check MAC address
+	 	-- `sudo cat /sys/class/dmi/id/product_uuid` to check product_uuid 
+	 2. Check network adapters
+	 3. Let iptables see bridged traffic
+	 	-- Make sure the br_netfilter module is loaded `lsmod | grep br_netfilter`
+		-- To load it `sudo modprobe br_netfilter`
+		-- Ensure iptables are set to '1' in sysctl config
+			`cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+			br_netfilter
+			EOF
 
+			cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+			net.bridge.bridge-nf-call-ip6tables = 1
+			net.bridge.bridge-nf-call-iptables = 1
+			EOF
+			
+			sudo sysctl --system ` 
 
+	4. Check required ports
+		-- telnet 127.0.0.1 6443
+
+	5. Install container runtime (docker/containerd)
+	6. Install kubeadm, kubelet and kubectl
+	7. 
 # Manage a highly available Kubernetes cluster
 - You can set up an HA cluster:
 
