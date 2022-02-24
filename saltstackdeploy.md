@@ -5,4 +5,5 @@
 - provision key pair manually or with automated script. (can include one here)
 - custom user data script can be inserted into the "userdata_file" attribute in the 
 etc/salt/cloud.profiles
-- 
+- Notes here for other things (copy template from saltstack docs)
+ 
